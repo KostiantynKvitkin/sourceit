@@ -1,71 +1,70 @@
-function BaseTank(newAmmunition, newfuel){
-	
-	var maxSpeed=60,
-		minSpeed=0,
-		shotSpeed=40;
+'use strict';
+  function BaseTank(newAmmunition, newfuel){
 
-		currentSpeed=0;
+    this._currentSpeed = 0;  //!!
+    
+    this._life=100;
+    this._people = 0;
 
-	this.life=100;
+    this._fuel=newfuel;
+    this._ammunition=newAmmunition;
+    
+  }
 
-	this.people;
+  BaseTank.prototype._MaxSpeed = 60;
+  BaseTank.prototype._MinSpeed = 0;
+  BaseTank.prototype._ShotSpeed = 40;
+  BaseTank.prototype._MaxSpeed = 60;
 
-	this.fuel=newfuel;
+  BaseTank.prototype.setSpeed_fast = function (){
+    if ( this._currentSpeed < this._MaxSpeed ) { 
+      this._currentSpeed++;
+    }
+  };
 
-	this.ammunition=newAmmunition;
+  BaseTank.prototype.setSpeed_slow = function(){
+    if ( this._currentSpeed > this._MinSpeed ) {
+      this._currentSpeed--;
+    }
+  };
 
-	this.setSpeed_fast=function(){
-		if ( currentSpeed < maxSpeed ) {
-			currentSpeed++;
-		}
-	}
+  BaseTank.prototype.goShot = function(){
+    if (this._currentSpeed <= this._ShotSpeed && this.ammunition > 0){
+      this.ammunition--;
+    }
+  };
 
-	this.setSpeed_slow=function(){
-		if ( currentSpeed > minSpeed ) {
-			currentSpeed--;
-		}
-	}
+  BaseTank.prototype.getSpeed = function(){
+    return this._currentSpeed;
+  }; 
+  
 
+  function Tank35(newAmmunition, newfuel){
+    BaseTank.call(this, newAmmunition, newfuel);
+  }
 
-	this.goShot=function(){
-		if (currentSpeed < shotSpeed && this.ammunition > 0){
-			this.ammunition--;
-		}
-	}
+  Tank35.prototype = Object.create(BaseTank.prototype); //!!!
+  Tank35.prototype.constructor = Tank35;
 
-	this.get_Speed=function(){
-		return currentSpeed;
-	}	
-}
+  Tank35.prototype.goShot = function(){
+    var doShot=false;
+    if (this.getSpeed() === 0  && this._ammunition >= 5){
+        this._ammunition = this._ammunition-5;
+        doShot=true;
+      }
+      return doShot;
+  };
 
-function Tank35(newAmmunition, newfuel){
+  Tank35.prototype.getData=function(){
+    var value = {};
+    value.life = this._life;
+    value.ammunition = this._ammunition;
+    value.speed = this.getSpeed();
+    return value;
+  };
 
-	BaseTank.call(this, newAmmunition, newfuel);
-
-	this.goShot=function(){
-		var currentSpeed=this.get_Speed(),
-			doShot=false;
-
-		if (currentSpeed === 0  && this.ammunition >= 5){
-			this.ammunition=this.ammunition-5;
-			doShot=true;
-		}
-
-		return doShot;
-
-	}
-
-}
-
-Tank35.prototype.getData=function(){
-	var value={};
-	value.life=this.life;
-	value.ammunition=this.ammunition;
-	value.speed=this.get_Speed();
-	return value;
-}
-
-Tank35.prototype.countGuns=5;
+  Tank35.prototype._countGuns = 5;
 
 
-var currentTank=new Tank35(10, 50);
+
+  var currentTank=new Tank35(10, 50);
