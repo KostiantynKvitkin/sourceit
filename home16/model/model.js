@@ -1,6 +1,6 @@
 class MapFifteen{
 
-	getMap(){
+	get getMap(){
 		return this.Map;
 	}
 
@@ -35,7 +35,7 @@ class BaseFifteen{
 		
 	}
 
-	getStorage(){
+	get getStorage(){
 		return this.storage;
 	}
 
@@ -45,11 +45,11 @@ class BaseFifteen{
 
 	
 
-		if (el.x > 0){
+		if (el.x){
 
 			if (this.storage[el.y][el.x-1] == 0){
 			
-			this.storage[el.y][el.x]=this.storage[el.y][el.x-1];
+			this.storage[el.y][el.x]=0;
 			this.storage[el.y][el.x-1]=value;
 			}
 		} 
@@ -58,16 +58,16 @@ class BaseFifteen{
 
 			if (this.storage[el.y][el.x+1]==0){
 			
-			this.storage[el.y][el.x]=this.storage[el.y][el.x+1];
+			this.storage[el.y][el.x]=0;
 			this.storage[el.y][el.x+1]=value;
 			}
 		}
 
-		if ( el.y > 0 ) {
+		if ( el.y ) {
 
 			if (this.storage[el.y-1][el.x] == 0){
 			
-			this.storage[el.y][el.x]=this.storage[el.y-1][el.x];
+			this.storage[el.y][el.x]=0;
 			this.storage[el.y-1][el.x]=value;
 			}
 		}
@@ -97,9 +97,9 @@ class Fifteen extends BaseFifteen {
 
 		let currELM={x:0, y:0};
 
-		for (var i = 0; i <= this.getStorage().length-1; i++) {
-			for (var j = 0; j <= this.getStorage().length-1; j++) {
-				if (this.getStorage()[i][j] == 0) {
+		for (let i = 0; i <= this.getStorage.length-1; i++) {
+			for (let j = 0; j <= this.getStorage.length-1; j++) {
+				if (this.getStorage[i][j] == 0) {
 					currELM.y=i;
 					currELM.x=j;
 					return currELM;
@@ -111,20 +111,21 @@ class Fifteen extends BaseFifteen {
 
 	showStorage(){
 		let find=this.searZeroEl(),
-			currMap=this.Map.getMap();
-	
+			currMap=this.Map.getMap;
+
+
 		View.clearView();
 
 
 		for (var key in currMap) {
 
-			if ( currMap[key].x == find.x && currMap[key].y==find.y){
+			if ( this.Map.getMap[key].x == find.x && this.Map.getMap[key].y==find.y){
 
 				View.hiddenView(key);
 
 				}
 					else {
-						let numb=this.getStorage()[currMap[key].y][currMap[key].x];
+						let numb=this.getStorage[this.Map.getMap[key].y][this.Map.getMap[key].x];
 
 						View.visibleView(key, numb);
 					}
@@ -138,4 +139,3 @@ class Fifteen extends BaseFifteen {
 	}
 
 }
-
